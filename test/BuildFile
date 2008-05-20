@@ -1,0 +1,3 @@
+<bin name=testClassIDCapability.cpp file=testClassIDCapability.cpp>
+<use name=CondFormat/Common>
+</bin> 
