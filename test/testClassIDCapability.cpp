@@ -7,7 +7,7 @@ namespace condtest{
 
   class B{};
 
-  typedef vector<int> V;
+  typedef std::vector<int> V;
 
 }
 
