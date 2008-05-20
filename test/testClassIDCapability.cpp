@@ -1,4 +1,4 @@
-#include "CondFormat/Common/interface/ClassIDCapability.h"
+#include "CondFormats/Common/interface/ClassIDCapability.h"
 #include <vector>
 
 namespace condtest{
@@ -13,9 +13,9 @@ namespace condtest{
 
 
 namespace {
-  ClassID<condtest::A> a;
-  ClassID<condtest::B> b;
-  ClassID<condtest::V> v;
+  cond::ClassID<condtest::A> a;
+  cond::ClassID<condtest::B> b;
+  cond::ClassID<condtest::V> v;
 }
 
 
