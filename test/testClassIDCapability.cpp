@@ -11,13 +11,17 @@ namespace condtest{
 
 }
 
-
+/*
 namespace {
   cond::ClassID<condtest::A> a;
   cond::ClassID<condtest::B> b;
   cond::ClassID<condtest::V> v;
 }
+*/
 
+CLASS_ID(ClassID<condtest::A);
+CLASS_ID(ClassID<condtest::B);
+CLASS_ID(ClassID<condtest::C);
 
 
 #include<iostream>
@@ -27,7 +31,7 @@ int main() {
   const char** names; 
   int n=0;
 
-  SEAL_CAPABILITIES(names,n);
+  NON_SEAL_CAPABILITIES(names,n);
 
   for (int i=0; i<n; i++)
     std::cout << names[i] << std::endl;
