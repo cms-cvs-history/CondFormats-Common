@@ -11,19 +11,11 @@ namespace condtest{
 
 }
 
-/*
-namespace {
-  cond::ClassID<condtest::A> a;
-  cond::ClassID<condtest::B> b;
-  cond::ClassID<condtest::V> v;
-}
-*/
+CLASS_ID(condtest::A);
 
-CLASS_ID(condtest::A, ca);
+CLASS_ID(condtest::B);
 
-CLASS_ID(condtest::B, cb);
-
-CLASS_ID(condtest::V, cv);
+CLASS_ID(condtest::V);
 
 
 #include<iostream>
