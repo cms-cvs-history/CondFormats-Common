@@ -37,7 +37,7 @@ namespace cond {
     /// Utility function to check for errors during execution
     void checkError( pool::DbStatus sc, const std::string& msg);
     
-    std::string fileId(const std::string& pfn, const DbType& technology);
+    std::string fileId(const std::string& pfn, const pool::DbType& technology);
     
     //// Utility function to print exception messages
     void printException( const pool::Exception& e);

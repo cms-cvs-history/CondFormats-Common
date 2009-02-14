@@ -56,12 +56,12 @@ using namespace ROOT;
 
 #include "CondFormats/Common/interface/PayloadWrapper.h"
 
-typedef  DataAndSummaryWrapper<int int> SimplePtrClass;
+typedef  cond::DataAndSummaryWrapper<int int> SimplePtrClass;
 
 
 int main() {
 
-  TestDriver td("sqlite_file:test.db");
+  cond::TestDriver td("sqlite_file:test.db");
   td.tun();
 
 }
