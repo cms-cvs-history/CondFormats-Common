@@ -56,14 +56,15 @@ using namespace ROOT;
 
 #include "CondFormats/Common/interface/PayloadWrapper.h"
 
-typedef  cond::DataAndSummaryWrapper<int int> SimplePtrClass;
+typedef  cond::DataAndSummaryWrapper<int, int> SimplePtrClass;
 
 
 int main() {
 
   cond::TestDriver td("sqlite_file:test.db");
-  td.tun();
+  td.run();
 
+  return 0;
 }
 
 
@@ -81,7 +82,7 @@ void cond::TestBase::init_(const std::string& catalogFileName){
     // initialize catalog
     std::string contStr = "file:"+catalogFileName;
     if (!catalogFileName.length()) contStr = contStr+"test_catalog.xml";
-    URIParser pars(contStr);
+    pool::URIParser pars(contStr);
     pars.parse();
     m_fileCatalog = new pool::IFileCatalog;
     try {
@@ -92,7 +93,7 @@ void cond::TestBase::init_(const std::string& catalogFileName){
     m_fileCatalog->connect();
     m_fileCatalog->start();
     // initialize dataSvc
-    m_dataSvc = DataSvcFactory::instance( m_fileCatalog );
+    m_dataSvc = pool::DataSvcFactory::instance( m_fileCatalog );
     m_init_test = true;
     pool::DatabaseConnectionPolicy policy;
     policy.setWriteModeForNonExisting( pool::DatabaseConnectionPolicy::CREATE );
@@ -252,7 +253,7 @@ void cond::TestDriver::cleanUp(){
   session->transaction().start();
   session->transaction().commit();
   delete session;
-  std::cout << OVALTAG <<  "All POOL Database Tables removed." <<std::endl; 
+  std::cout <<  "All POOL Database Tables removed." <<std::endl; 
 }
 
 void cond::TestDriver::readBackData(unsigned int expected){
