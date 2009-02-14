@@ -226,8 +226,8 @@ void cond::TestDriver::createDatabase(unsigned int nobjects){
 
   unsigned int i;
   for (i = 0; i < nobjects; ++i )   {
-    pool::Ref<PayloadWrapper> simple1(m_dataSvc,new IntPtrClass(new int(i), new int(i)));
-    pool::Ref<PayloadWrapper> simple2(m_dataSvc,new DoublePtrClass(new double(i), new double(i)));
+    pool::Ref<PayloadWrapper> simple1(m_dataSvc,new IntPtr(new int(i), new int(i)));
+    pool::Ref<PayloadWrapper> simple2(m_dataSvc,new DoublePtr(new double(i), new double(i)));
 
     try{
       simple1.markWrite(place1);
