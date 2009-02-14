@@ -67,7 +67,15 @@ int main() {
 }
 
 
-void pool::TestBase::init_(const std::string& catalogFileName){
+namespace {
+
+  void printError(std::string const & err) {
+    std::cout << err << std::endl;
+  }
+}
+
+
+void cond::TestBase::init_(const std::string& catalogFileName){
   try{
     coral::MessageStream::setMsgVerbosity( coral::Info );
     // initialize catalog
@@ -97,17 +105,17 @@ void pool::TestBase::init_(const std::string& catalogFileName){
 }
 
 /// Standard Constructor
-pool::TestBase::TestBase(const std::string& catalogFileName) : m_dataSvc(0),m_fileCatalog(0),m_init_test(false){
+cond::TestBase::TestBase(const std::string& catalogFileName) : m_dataSvc(0),m_fileCatalog(0),m_init_test(false){
   init_(catalogFileName); 
 }
 
 /// Standard Constructor
-pool::TestBase::TestBase() : m_dataSvc(0),m_fileCatalog(0),m_init_test(false){
+cond::TestBase::TestBase() : m_dataSvc(0),m_fileCatalog(0),m_init_test(false){
   init_(""); 
 }
 
 /// Standard Destructor
-pool::TestBase::~TestBase(){
+cond::TestBase::~TestBase(){
   delete m_dataSvc;
   m_fileCatalog->commit();
   m_fileCatalog->disconnect();
@@ -115,18 +123,18 @@ pool::TestBase::~TestBase(){
 }
     
     /// Utility function to check for errors during execution
-void pool::TestBase::checkError(pool::DbStatus sc, const std::string& msg)    {
+void cond::TestBase::checkError(pool::DbStatus sc, const std::string& msg)    {
   if ( !sc.isSuccess() )  {
     std::cout << "test Error: " << msg << std::endl;
   }
 }
 
 //// Utility function to print exception messages
-void pool::TestBase::printException(const pool::Exception& e){
+void cond::TestBase::printException(const pool::Exception& e){
   std::cout << "Exception: " << e.what() << "\n";
 }
 
-std::string pool::TestBase::fileId(const std::string& pfn,
+std::string cond::TestBase::fileId(const std::string& pfn,
                                    const pool::DbType& technology){
   std::string fid, tech;
   // try to re-use an already existing file
@@ -144,7 +152,7 @@ std::string pool::TestBase::fileId(const std::string& pfn,
 }
 
 
-void pool::TestBase::setDbLogin( const std::string& userName,const std::string & passwd){
+void cond::TestBase::setDbLogin( const std::string& userName,const std::string & passwd){
   //  pool::POOLContext::loadComponent( "POOL/Services/EnvironmentAuthenticationService" );
   const std::string userNameEnv = "POOL_AUTH_USER=" + userName;
   ::putenv( const_cast<char*>( userNameEnv.c_str() ) );
@@ -157,7 +165,7 @@ namespace pool  {
   int numTokenInstances();
 }
 
-void pool::TestBase::run(){
+void cond::TestBase::run(){
   if(m_init_test){
     try   {
       execute();    
@@ -184,20 +192,20 @@ void pool::TestBase::run(){
   }
 }
 
-void pool::TestBase::setMessageVerbosityLevel( coral::MsgLevel level ){
+void cond::TestBase::setMessageVerbosityLevel( coral::MsgLevel level ){
   coral::MessageStream::setMsgVerbosity( level );
 }
 
 //------------------------------------
 
-pool::TestDriver::TestDriver( const std::string& connectionString):TestBase(),m_connectionString(connectionString){
+cond::TestDriver::TestDriver( const std::string& connectionString):TestBase(),m_connectionString(connectionString){
   setMessageVerbosityLevel( coral::Debug );
 }
 
-pool::TestDriver::~TestDriver(){
+cond::TestDriver::~TestDriver(){
 }
 
-void pool::TestDriver::createDatabase(unsigned int nobjects){
+void cond::TestDriver::createDatabase(unsigned int nobjects){
   std::cout << "##### creating and filling POOL Database " << std::endl;  
   
   pool::Placement place1, place2;
@@ -235,7 +243,7 @@ void pool::TestDriver::createDatabase(unsigned int nobjects){
 
 }
 
-void pool::TestDriver::cleanUp(){
+void cond::TestDriver::cleanUp(){
   std::cout << "##### cleaning up existing schema " << std::endl;
 
   coral::ConnectionService  connServ;
@@ -247,7 +255,7 @@ void pool::TestDriver::cleanUp(){
   std::cout << OVALTAG <<  "All POOL Database Tables removed." <<std::endl; 
 }
 
-void pool::TestDriver::readBackData(unsigned int expected){
+void cond::TestDriver::readBackData(unsigned int expected){
 
   std::cout << "##### reading back data from POOL database " << std::endl;
 
@@ -320,7 +328,7 @@ void pool::TestDriver::readBackData(unsigned int expected){
 
 }
 
-void pool::TestDriver::execute(){
+void cond::TestDriver::execute(){
 
   createDatabase(10);
   coral::sys::sleep(1);

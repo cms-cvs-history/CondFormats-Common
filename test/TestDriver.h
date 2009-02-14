@@ -20,8 +20,8 @@ namespace cond {
 
   class TestBase {
   protected: 
-    IDataSvc*        m_dataSvc;
-    IFileCatalog*    m_fileCatalog;
+    pool::IDataSvc*        m_dataSvc;
+    pool::IFileCatalog*    m_fileCatalog;
     bool m_init_test;
   public: 
     
