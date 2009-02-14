@@ -57,7 +57,8 @@ using namespace ROOT;
 #include "CondFormats/Common/interface/PayloadWrapper.h"
 
 typedef  cond::DataAndSummaryWrapper<int, int> SimplePtrClass;
-
+typedef  cond::DataAndSummaryWrapper<int, int>      IntPtr;
+typedef  cond::DataAndSummaryWrapper<double,double> DoublePtr;
 
 int main() {
 
@@ -200,7 +201,7 @@ void cond::TestBase::setMessageVerbosityLevel( coral::MsgLevel level ){
 //------------------------------------
 
 cond::TestDriver::TestDriver( const std::string& connectionString):TestBase(),m_connectionString(connectionString){
-  setMessageVerbosityLevel( coral::Debug );
+  // setMessageVerbosityLevel( coral::Debug );
 }
 
 cond::TestDriver::~TestDriver(){
@@ -225,10 +226,12 @@ void cond::TestDriver::createDatabase(unsigned int nobjects){
 
   unsigned int i;
   for (i = 0; i < nobjects; ++i )   {
-    pool::Ref<SimplePtrClass> simple(m_dataSvc,new SimplePtrClass(new int(i), new int(i)));
+    pool::Ref<PayloadWrapper> simple1(m_dataSvc,new IntPtrClass(new int(i), new int(i)));
+    pool::Ref<PayloadWrapper> simple2(m_dataSvc,new DoublePtrClass(new double(i), new double(i)));
 
     try{
-      simple.markWrite(place1);
+      simple1.markWrite(place1);
+      simple2.markWrite(place2);
     } catch (const pool::RefException& e){
       printException(e);        
     }
