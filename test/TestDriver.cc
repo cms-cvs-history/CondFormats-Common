@@ -55,6 +55,7 @@ using namespace ROOT;
 
 
 #include "CondFormats/Common/interface/PayloadWrapper.h"
+#include <vector>
 
 typedef std::vector<int> VInt;
 typedef std::vector<int> VDouble;
