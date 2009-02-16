@@ -60,7 +60,7 @@ using namespace ROOT;
 typedef std::vector<int> VInt;
 typedef std::vector<int> VDouble;
 typedef  cond::DataAndSummaryWrapper<VInt, VInt> SimplePtrClass;
-typedef  cond::DataAndSummaryWrapper<VIne, VInt>      IntPtr;
+typedef  cond::DataAndSummaryWrapper<VInt, VInt>      IntPtr;
 typedef  cond::DataAndSummaryWrapper<VDouble,VDouble> DoublePtr;
 
 int main() {
