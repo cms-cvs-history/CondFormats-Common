@@ -56,9 +56,11 @@ using namespace ROOT;
 
 #include "CondFormats/Common/interface/PayloadWrapper.h"
 
-typedef  cond::DataAndSummaryWrapper<int, int> SimplePtrClass;
-typedef  cond::DataAndSummaryWrapper<int, int>      IntPtr;
-typedef  cond::DataAndSummaryWrapper<double,double> DoublePtr;
+typedef std::vector<int> VInt;
+typedef std::vector<int> VDouble;
+typedef  cond::DataAndSummaryWrapper<VInt, VInt> SimplePtrClass;
+typedef  cond::DataAndSummaryWrapper<VIne, VInt>      IntPtr;
+typedef  cond::DataAndSummaryWrapper<VDouble,VDouble> DoublePtr;
 
 int main() {
 
@@ -226,8 +228,8 @@ void cond::TestDriver::createDatabase(unsigned int nobjects){
 
   unsigned int i;
   for (i = 0; i < nobjects; ++i )   {
-    pool::Ref<PayloadWrapper> simple1(m_dataSvc,new IntPtr(new int(i), new int(i)));
-    pool::Ref<PayloadWrapper> simple2(m_dataSvc,new DoublePtr(new double(i), new double(i)));
+    pool::Ref<PayloadWrapper> simple1(m_dataSvc,new IntPtr(new VInt(i,i), new VInt(i,i)));
+    pool::Ref<PayloadWrapper> simple2(m_dataSvc,new DoublePtr(new VDouble(i,i), new VDouble(i,i)));
 
     try{
       simple1.markWrite(place1);
@@ -276,9 +278,9 @@ void cond::TestDriver::readBackData(unsigned int expected){
     // here loading all data including the ptr
     simpleObj0.ref()->loadAll();
   try {
-    int seed = simpleObj0.ref()->data();
+    int seed = simpleObj0.ref()->data().size();
     // now accessing the summary
-    std::cout << "Summary="<<simpleObj0.ref()->summary()<<std::endl;
+    std::cout << "Summary="<<simpleObj0.ref()->summary().size()<<std::endl;
   } catch (const pool::Exception& e){
     std::cout << "ACCESSING PTR"<<e.what()<<std::endl;
   }
