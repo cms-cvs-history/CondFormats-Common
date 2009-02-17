@@ -281,7 +281,7 @@ void cond::TestDriver::readBackData(unsigned int expected){
   try {
     int seed = simpleObj0.ref()->data().size();
     // now accessing the summary
-    std::cout << "Summary="<<simpleObj0.ref()->summary().size()<<std::endl;
+    std::cout << "Summary="<<simpleObj0.ref()->summary().back()<<std::endl;
   } catch (const pool::Exception& e){
     std::cout << "ACCESSING PTR"<<e.what()<<std::endl;
   }
@@ -297,16 +297,16 @@ void cond::TestDriver::readBackData(unsigned int expected){
   // commit the transaction
   m_dataSvc->transaction().commit();
   
-  std::cout << "##### reading again... " << std::endl;
-  pool::Ref< SimplePtrClass > lastRef;
+  std::cout << "##### reading cont2... " << std::endl;
+  pool::Ref< DoublePtr > lastRef;
   // Start read transaction I
   m_dataSvc->transaction().start( pool::ITransaction::READ );
-  pool::Collection< SimplePtrClass > simpleCollection1( m_dataSvc,
+  pool::Collection< DoublePtr > simpleCollection1( m_dataSvc,
                                                    "ImplicitCollection",
                                                    "PFN:" + m_connectionString,
-                                                   "Cont1",
+                                                   "Cont2",
                                                    pool::ICollection::READ );
-  pool::Collection< SimplePtrClass >::Iterator simpleObj1 = simpleCollection1.select();
+  pool::Collection< DoublePtr >::Iterator simpleObj1 = simpleCollection1.select();
   numberOfObj = 0;
   while ( simpleObj1.next() ) {
     // here loading just the summary
