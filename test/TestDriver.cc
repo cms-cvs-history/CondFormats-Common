@@ -58,10 +58,10 @@ using namespace ROOT;
 #include <vector>
 
 typedef std::vector<int> VInt;
-typedef std::vector<int> VDouble;
-typedef  cond::DataAndSummaryWrapper<VInt, VInt> SimplePtrClass;
-typedef  cond::DataAndSummaryWrapper<VInt, VInt>      IntPtr;
-typedef  cond::DataAndSummaryWrapper<VDouble,VDouble> DoublePtr;
+typedef std::vector<double> VDouble;
+typedef cond::DataWrapper<VInt> SimplePtrClass;
+typedef cond::DataWrapper<VInt>      IntPtr;
+typedef cond::DataWrapper<VDouble> DoublePtr;
 
 int main() {
 
@@ -229,8 +229,8 @@ void cond::TestDriver::createDatabase(unsigned int nobjects){
 
   unsigned int i;
   for (i = 0; i < nobjects; ++i )   {
-    pool::Ref<PayloadWrapper> simple1(m_dataSvc,new IntPtr(new VInt(i,i), new VInt(i,i)));
-    pool::Ref<PayloadWrapper> simple2(m_dataSvc,new DoublePtr(new VDouble(i,i), new VDouble(i,i)));
+    pool::Ref<PayloadWrapper> simple1(m_dataSvc,new IntPtr(new VInt(i,i), new cond::Summary("int")));
+    pool::Ref<PayloadWrapper> simple2(m_dataSvc,new DoublePtr(new VDouble(i,i), new cond::Summary("double")));
 
     try{
       simple1.markWrite(place1);
