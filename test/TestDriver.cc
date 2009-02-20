@@ -281,7 +281,7 @@ void cond::TestDriver::readBackData(unsigned int expected){
   try {
     int seed = simpleObj0.ref()->data().size();
     // now accessing the summary
-    std::cout << "Summary="<<simpleObj0.ref()->summary().back()<<std::endl;
+    std::cout << "Summary="<<simpleObj0.ref()->summary()<<std::endl;
   } catch (const pool::Exception& e){
     std::cout << "ACCESSING PTR"<<e.what()<<std::endl;
   }
