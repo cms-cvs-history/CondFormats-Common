@@ -11,7 +11,8 @@
 
 <bin file=hash64_t.cpp>
 </bin>
-
+<bin file=SmallWORMDict_t.cpp>
+</bin>
 
 <bin file=TestDriver.cc name=exCondWrapper>
 <use name=CoralCommon>
