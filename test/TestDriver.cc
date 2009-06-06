@@ -55,6 +55,7 @@ using namespace ROOT;
 
 
 #include "CondFormats/Common/interface/PayloadWrapper.h"
+#include "CondFormats/Common/interface/GenericSummary.h"
 #include <vector>
 
 typedef std::vector<int> VInt;
@@ -229,8 +230,8 @@ void cond::TestDriver::createDatabase(unsigned int nobjects){
 
   unsigned int i;
   for (i = 0; i < nobjects; ++i )   {
-    pool::Ref<PayloadWrapper> simple1(m_dataSvc,new IntPtr(new VInt(i,i), new cond::Summary("int")));
-    pool::Ref<PayloadWrapper> simple2(m_dataSvc,new DoublePtr(new VDouble(i,i), new cond::Summary("double")));
+    pool::Ref<PayloadWrapper> simple1(m_dataSvc,new IntPtr(new VInt(i,i), new cond::GenericSummary("int")));
+    pool::Ref<PayloadWrapper> simple2(m_dataSvc,new DoublePtr(new VDouble(i,i), new cond::GenericSummary("double")));
 
     try{
       simple1.markWrite(place1);
