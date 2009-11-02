@@ -295,7 +295,7 @@ void cond::TestDriver::readBackData(unsigned int expected){
   m_dataSvc->transaction().commit();
   
   std::cout << "##### reading cont2... " << std::endl;
-  pool::Ref< SimplwPtr > lastRef;
+  pool::Ref< SimplePtr > lastRef;
   // Start read transaction I
   m_dataSvc->transaction().start( pool::ITransaction::READ );
   pool::Collection< SimplePtr > simpleCollection1( m_dataSvc,
@@ -303,7 +303,7 @@ void cond::TestDriver::readBackData(unsigned int expected){
                                                    "PFN:" + m_connectionString,
                                                    "Cont2",
                                                    pool::ICollection::READ );
-  pool::Collection<  simplePtr >::Iterator simpleObj1 = simpleCollection1.select();
+  pool::Collection< SimplePtr >::Iterator simpleObj1 = simpleCollection1.select();
   numberOfObj = 0;
   while ( simpleObj1.next() ) {
     // here loading just the summary
