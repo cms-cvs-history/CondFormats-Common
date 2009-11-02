@@ -65,8 +65,13 @@ typedef THECLASS Payload;
 
 typedef cond::DataWrapper<Payload> SimplePtr;
 
-int main() {
+namespace{
+  bool withWrapper=false;
+}
 
+int main(int argc, char** ) {
+
+  withWrapper = argc>1;
   cond::TestDriver td("sqlite_file:test.db");
   td.run();
 
@@ -231,12 +236,13 @@ void cond::TestDriver::createDatabase(unsigned int nobjects){
 
   unsigned int i;
   for (i = 0; i < nobjects; ++i )   {
-    pool::Ref<Payload> simple1(m_dataSvc,new Payload);
-    pool::Ref<PayloadWrapper> simple2(m_dataSvc,new SimplePtr(new Payload, new cond::GenericSummary("THECLASS")));
-
-    try{
+    try {
+      pool::Ref<Payload> simple1(m_dataSvc,new Payload);
       simple1.markWrite(place1);
-      simple2.markWrite(place2);
+      if (withWrapper) {
+        pool::Ref<PayloadWrapper> simple2(m_dataSvc,new SimplePtr(new Payload, new cond::GenericSummary("THECLASS")));
+        simple2.markWrite(place2);
+      }
     } catch (const pool::RefException& e){
       printException(e);        
     }
@@ -293,7 +299,7 @@ void cond::TestDriver::readBackData(unsigned int expected){
   }
   // commit the transaction
   m_dataSvc->transaction().commit();
-  
+  if (withWrapper) {
   std::cout << "##### reading cont2... " << std::endl;
   pool::Ref< SimplePtr > lastRef;
   // Start read transaction I
@@ -326,7 +332,7 @@ void cond::TestDriver::readBackData(unsigned int expected){
     std::cout << "OK, got the exception, underlying pointer is null."<<std::endl;
     //std::cout << e.what() << std::endl;
   }
-  
+  }
   
   m_dataSvc->session().disconnectAll();
 
