@@ -58,12 +58,11 @@ using namespace ROOT;
 #include "CondFormats/Common/interface/GenericSummary.h"
 #include <vector>
 
-
-
-#include "CondFormats/THEPACKAGE/interface/THEHEADER.h"
-typedef THECLASS Payload;
-
-typedef cond::DataWrapper<Payload> SimplePtr;
+typedef std::vector<int> VInt;
+typedef std::vector<double> VDouble;
+typedef cond::DataWrapper<VInt> SimplePtrClass;
+typedef cond::DataWrapper<VInt>      IntPtr;
+typedef cond::DataWrapper<VDouble> DoublePtr;
 
 int main() {
 
@@ -231,8 +230,8 @@ void cond::TestDriver::createDatabase(unsigned int nobjects){
 
   unsigned int i;
   for (i = 0; i < nobjects; ++i )   {
-    pool::Ref<Payload> simple1(m_dataSvc,new Payload);
-    pool::Ref<PayloadWrapper> simple2(m_dataSvc,new SimplePtr(new Payload, new cond::GenericSummary("THECLASS")));
+    pool::Ref<PayloadWrapper> simple1(m_dataSvc,new IntPtr(new VInt(i,i), new cond::GenericSummary("int")));
+    pool::Ref<PayloadWrapper> simple2(m_dataSvc,new DoublePtr(new VDouble(i,i), new cond::GenericSummary("double")));
 
     try{
       simple1.markWrite(place1);
@@ -270,20 +269,25 @@ void cond::TestDriver::readBackData(unsigned int expected){
 
   // Start read transaction I
   m_dataSvc->transaction().start( pool::ITransaction::READ );
-  pool::Collection< Payload > simpleCollection0( m_dataSvc,
+  pool::Collection< SimplePtrClass > simpleCollection0( m_dataSvc,
                                                    "ImplicitCollection",
                                                    "PFN:" + m_connectionString,
                                                    "Cont1",
                                                    pool::ICollection::READ );
-  pool::Collection< Payload >::Iterator simpleObj0 = simpleCollection0.select();
+  pool::Collection< SimplePtrClass >::Iterator simpleObj0 = simpleCollection0.select();
   unsigned int numberOfObj = 0;
   while ( simpleObj0.next() ) {
-    try {
     // here loading all data including the ptr
-      *simpleObj0.ref();
-    } catch (const pool::Exception& e){
-      std::cout << "ACCESSING Payload"<<e.what()<<std::endl;
-    }
+    simpleObj0.ref()->loadAll();
+  try {
+    int seed = simpleObj0.ref()->data().size();
+    // now accessing the summary
+    std::cout << "Summary="<<simpleObj0.ref()->summary()<<std::endl;
+  } catch (const pool::Exception& e){
+    std::cout << "ACCESSING PTR"<<e.what()<<std::endl;
+  }
+  
+
     numberOfObj++;
   }
   std::cout << "Read back " <<numberOfObj<< " object of type SimplePtrClass" <<std::endl;
@@ -295,15 +299,15 @@ void cond::TestDriver::readBackData(unsigned int expected){
   m_dataSvc->transaction().commit();
   
   std::cout << "##### reading cont2... " << std::endl;
-  pool::Ref< SimplwPtr > lastRef;
+  pool::Ref< DoublePtr > lastRef;
   // Start read transaction I
   m_dataSvc->transaction().start( pool::ITransaction::READ );
-  pool::Collection< SimplePtr > simpleCollection1( m_dataSvc,
+  pool::Collection< DoublePtr > simpleCollection1( m_dataSvc,
                                                    "ImplicitCollection",
                                                    "PFN:" + m_connectionString,
                                                    "Cont2",
                                                    pool::ICollection::READ );
-  pool::Collection<  simplePtr >::Iterator simpleObj1 = simpleCollection1.select();
+  pool::Collection< DoublePtr >::Iterator simpleObj1 = simpleCollection1.select();
   numberOfObj = 0;
   while ( simpleObj1.next() ) {
     // here loading just the summary
