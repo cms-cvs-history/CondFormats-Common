@@ -55,7 +55,7 @@ using namespace ROOT;
 #include "POOLCore/IBlobStreamingService.h"
 #include "CondCore/DBCommon/interface/CoralServiceManager.h"
 #include "CoralKernel/Context.h"
-
+#include "PersistencySvc/IConfiguration.h"
 #include "CondFormats/Common/interface/PayloadWrapper.h"
 #include "CondFormats/Common/interface/GenericSummary.h"
 #include <vector>
