@@ -109,7 +109,7 @@ void cond::TestBase::init_(const std::string& catalogFileName){
     // initialize dataSvc
     m_dataSvc = pool::DataSvcFactory::instance( m_fileCatalog );
     coral::Context::instance().loadComponent( "COND/Services/TBufferBlobStreamingService", &m_pluginmanager );
-    m_dataSvc->configuration().setBlobStreamer((coral::Context::instance().query<pool::IBlobStreamingService>()), false);
+    m_dataSvc->configuration().setBlobStreamer(&(*(coral::Context::instance().query<pool::IBlobStreamingService>())), false);
 
     m_init_test = true;
     pool::DatabaseConnectionPolicy policy;
