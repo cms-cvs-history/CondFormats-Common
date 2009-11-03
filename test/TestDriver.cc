@@ -20,6 +20,12 @@
 #include "FileCatalog/IFCAction.h"
 #include "Reflex/SharedLibrary.h"
 
+
+#include "FWCore/PluginManager/interface/PluginManager.h"
+#include "FWCore/PluginManager/interface/standard.h"
+#include "FWCore/PluginManager/interface/SharedLibrary.h"
+
+
 #include "RVersion.h"
 
 #if ROOT_VERSION_CODE < ROOT_VERSION(5,19,0)
@@ -91,6 +97,9 @@ namespace {
 
 void cond::TestBase::init_(const std::string& catalogFileName){
   try{
+    edmplugin::PluginManager::Config config;
+    edmplugin::PluginManager::configure(edmplugin::standard::config());
+
     CoralServiceManager m_pluginmanager;
     coral::MessageStream::setMsgVerbosity( coral::Info );
     // initialize catalog
