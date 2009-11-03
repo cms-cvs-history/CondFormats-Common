@@ -52,6 +52,8 @@ using namespace ROOT;
 #include <cstdlib>
 #include <stdexcept>
 #include "CoralCommon/Sleep.h"
+#include "POOLCore/IBlobStreamingService.h"
+#include "CondCore/DBCommon/interface/CoralServiceManager.h"
 
 
 #include "CondFormats/Common/interface/PayloadWrapper.h"
@@ -89,6 +91,7 @@ namespace {
 
 void cond::TestBase::init_(const std::string& catalogFileName){
   try{
+    CoralServiceManager m_pluginmanager;
     coral::MessageStream::setMsgVerbosity( coral::Info );
     // initialize catalog
     std::string contStr = "file:"+catalogFileName;
@@ -105,6 +108,9 @@ void cond::TestBase::init_(const std::string& catalogFileName){
     m_fileCatalog->start();
     // initialize dataSvc
     m_dataSvc = pool::DataSvcFactory::instance( m_fileCatalog );
+    coral::Context::instance().loadComponent( "COND/Services/TBufferBlobStreamingService", &m_pluginmanager );
+    m_datasvc->configuration().setBlobStreamer((coral::Context::instance().query<pool::IBlobStreamingService>()), false);
+
     m_init_test = true;
     pool::DatabaseConnectionPolicy policy;
     policy.setWriteModeForNonExisting( pool::DatabaseConnectionPolicy::CREATE );
