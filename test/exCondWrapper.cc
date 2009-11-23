@@ -256,7 +256,7 @@ void cond::TestDriver::cleanUp(){
 
   coral::ConnectionService  connServ;
   coral::ISessionProxy* session = connServ.connect(m_connectionString );
-  coral::ISchema& schema = session->nominalSchema();
+  //  coral::ISchema& schema = session->nominalSchema();
   session->transaction().start();
   session->transaction().commit();
   delete session;
@@ -280,7 +280,7 @@ void cond::TestDriver::readBackData(unsigned int expected){
     // here loading all data including the ptr
     simpleObj0.ref()->loadAll();
   try {
-    int seed = simpleObj0.ref()->data().size();
+    // int seed = simpleObj0.ref()->data().size();
     // now accessing the summary
     std::cout << "Summary="<<simpleObj0.ref()->summary()<<std::endl;
   } catch (const pool::Exception& e){
