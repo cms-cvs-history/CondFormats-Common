@@ -1,3 +1,16 @@
+/*
+<bin   file="exCondWrapper.cc" name="exCondWrapper">
+  <use   name="CoralCommon"/>
+  <use   name="CoralKernel"/>
+   <use   name="RelationalAccess"/>
+   <use   name="DataSvc"/>
+  <use   name="Collection"/>
+  <use   name="ObjectRelationalAccess"/>
+</bin>
+
+ */
+
+
 #include "TestDriver.h"
 
 
